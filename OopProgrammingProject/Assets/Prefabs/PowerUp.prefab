@@ -108,4 +108,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87c46eba1aff64847bdbca12c166882e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpType: 1
+  <powerUpType>k__BackingField: 1

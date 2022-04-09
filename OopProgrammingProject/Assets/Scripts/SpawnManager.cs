@@ -27,7 +27,7 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Üstünde Enemy Scripti olan objeleri bul sayýsýný ver dedik s takýsýna dikkat
+        //We got the number of objects with Enemy Script on them, pay attention to the s symbol
         enemyCount = FindObjectsOfType<Enemy>().Length;
 
         if (enemyCount == 0)
@@ -46,7 +46,7 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
-    private void SpawnEnemyWave(int enemyToSpawn)
+    public void SpawnEnemyWave(int enemyToSpawn)
     {
         for (int i = 0; i < enemyToSpawn; i++)
         {
@@ -56,8 +56,8 @@ public class SpawnManager : MonoBehaviour
     }
     private void SpawnBossWave()
     {
-        randomEnemy = GenerateRandomNumber(0, 3);
-        Instantiate(enemyPrefab[randomEnemy], GenerateRandomPos(), enemyPrefab[randomEnemy].transform.rotation);
+        //randomEnemy = GenerateRandomNumber(0, 3);
+       // Instantiate(enemyPrefab[randomEnemy], GenerateRandomPos(), enemyPrefab[randomEnemy].transform.rotation);
         Instantiate(bossPrefab, GenerateRandomPos(), bossPrefab.transform.rotation);
     }
     private void SpawnPowerUp()
