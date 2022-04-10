@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// INHERITANCE
 public class Boss : Enemy
 {
     private SpawnManager spawnManager;
     private int enemyToSpawn = 1;
+
+    // POLYMORPHISM
     protected override void GameStart()
     {
         base.GameStart();

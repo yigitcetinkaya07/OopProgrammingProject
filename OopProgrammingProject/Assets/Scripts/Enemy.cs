@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
 
     protected int repeaRate = 10;
     protected int invokeTime = 5;
+    private MainUIHandler mainUIScript;
     private void Start()
     {
         GameStart();
@@ -22,13 +23,18 @@ public class Enemy : MonoBehaviour
     {
         enemyRb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
+        mainUIScript = GameObject.Find("MainUIManager").GetComponent<MainUIHandler>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        Move();
-        CheckBoundary();
+        if (!mainUIScript.gameIsPaused)
+        {
+            Move();
+            CheckBoundary();
+        }
+       
     }
     protected virtual void Move()
     {
