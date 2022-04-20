@@ -6,11 +6,11 @@ public class Boss : Enemy
 {
     private SpawnManager spawnManager;
     private int enemyToSpawn = 1;
-
     // POLYMORPHISM
     protected override void GameStart()
     {
         base.GameStart();
+        point = 30;
         SetInvokeTime(1, 5);
         spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         InvokeRepeating("SpawnMinions", invokeTime,repeaRate);

@@ -35,11 +35,13 @@ public class PlayerController : MonoBehaviour
     private float explosionRadius;
     private bool smashing = false;
     private float floorY;
+    private MainUIHandler mainUIScript;
 
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         focalPoint = GameObject.Find("FocalPoint");
+        mainUIScript = GameObject.Find("MainUIManager").GetComponent<MainUIHandler>();
     }
 
     void Update()
@@ -57,7 +59,20 @@ public class PlayerController : MonoBehaviour
             smashing = true;
             StartCoroutine(Smash());
         }
+        if (!mainUIScript.gameOver)
+        {
+            DeathZone();
+        }
+
     }
+    private void DeathZone()
+    {
+        if (transform.position.y < -10)
+        {
+            mainUIScript.GameOver();            
+        }
+    }
+   
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PowerUp"))
@@ -135,5 +150,6 @@ public class PlayerController : MonoBehaviour
             tmpRocket.GetComponent<RocketBehavior>().Fire(enemy.transform);
         }
     }
+
 
 }

@@ -9,6 +9,7 @@ public class Ninja : Enemy
     protected override void GameStart()
     {
         base.GameStart();
+        point = 20;
         SetInvokeTime(5, 10);
         InvokeRepeating("Teleport", invokeTime, repeaRate);
     }

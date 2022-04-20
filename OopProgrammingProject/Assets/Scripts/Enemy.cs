@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Enemy : MonoBehaviour
     protected int repeaRate = 10;
     protected int invokeTime = 5;
     private MainUIHandler mainUIScript;
+    protected int point = 10;
+    //public UnityEvent<int> onDestroyed;
     private void Start()
     {
         GameStart();
@@ -24,12 +27,13 @@ public class Enemy : MonoBehaviour
         enemyRb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
         mainUIScript = GameObject.Find("MainUIManager").GetComponent<MainUIHandler>();
+
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (!mainUIScript.gameIsPaused)
+        if (!mainUIScript.gameIsPaused || !mainUIScript.gameOver)
         {
             Move();
             CheckBoundary();
@@ -46,6 +50,7 @@ public class Enemy : MonoBehaviour
 
         if (transform.position.y < -10)
         {
+            mainUIScript.AddPoint(point);
             Destroy(gameObject);
         }
     }

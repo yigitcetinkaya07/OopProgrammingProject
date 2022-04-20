@@ -2,18 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+// Sets the script to be executed later than all default scripts
+// This is helpful for UI, since other things may need to be initialized before setting the UI
+[DefaultExecutionOrder(1000)]
 public class MainUIHandler : MonoBehaviour
 {
     public bool gameIsPaused = false;
-    public GameObject pauseScreen;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private GameObject pauseScreen;
+    [SerializeField]
+    private GameObject gameOverScreen;
+    [SerializeField]
+    private TextMeshProUGUI scoreText;
+    private int m_Points;
+    [field:SerializeField]
+    public bool gameOver { get; private set; } = false;
+    // private HighScoreTable highScoreTable;
+    private static DataManager dataManagerInstance = DataManager.Instance;
 
     // Update is called once per frame
     void Update()
@@ -23,6 +32,15 @@ public class MainUIHandler : MonoBehaviour
             gameIsPaused = !gameIsPaused;
             PauseGame();
         }
+    }
+    public void AddPoint(int point)
+    {
+        if (!gameOver)
+        {
+            m_Points += point;
+            scoreText.text = $"Score : {m_Points}";
+        }
+
     }
     void PauseGame()
     {
@@ -37,8 +55,31 @@ public class MainUIHandler : MonoBehaviour
             pauseScreen.gameObject.SetActive(false);
         }
     }
+    public void GameOver()
+    {
+        if (dataManagerInstance.CheckScoreCount())
+        {
+            HighScoreEntry highScoreEntry = dataManagerInstance.GetLastScore();
+            if (m_Points >= highScoreEntry.score)
+            {
+                dataManagerInstance.RemoveScore();
+                dataManagerInstance.AddHighScoreEntry(m_Points, dataManagerInstance.inputName);
+            }
+        }
+        else
+        {
+            dataManagerInstance.AddHighScoreEntry(m_Points, dataManagerInstance.inputName);
+        }
+        gameOver = true;
+        gameOverScreen.SetActive(true);
+    }
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
     public void MainMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
     public void Exit()

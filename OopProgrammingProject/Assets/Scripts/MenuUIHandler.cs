@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -16,10 +17,13 @@ public class MenuUIHandler : MonoBehaviour
     private float rotationSpeed;
     [SerializeField]
     private GameObject instructionsPanel;
+    [SerializeField]
+    private GameObject highScorePanel;
+    [SerializeField]
+    private InputField inputField;
     // Start is called before the first frame update
     void Start()
     {
-        
     }
     private void Update()
     {
@@ -29,9 +33,14 @@ public class MenuUIHandler : MonoBehaviour
     {
         instructionsPanel.SetActive(!instructionsPanel.activeSelf);
     }
+    public void HighScores()
+    {
+        highScorePanel.SetActive(!highScorePanel.activeSelf);
+    }
 
     public void StartNew()
     {
+        DataManager.Instance.inputName = inputField.text;
         SceneManager.LoadScene(1);
     }
     public void Exit()

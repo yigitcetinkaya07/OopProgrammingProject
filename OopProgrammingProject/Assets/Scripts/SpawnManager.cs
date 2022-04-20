@@ -16,7 +16,7 @@ public class SpawnManager : MonoBehaviour
 
     private int enemyCount;
     private int waveNumber = 1;
-
+    private MainUIHandler mainUI;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +29,6 @@ public class SpawnManager : MonoBehaviour
     {
         //We got the number of objects with Enemy Script on them, pay attention to the s symbol
         enemyCount = FindObjectsOfType<Enemy>().Length;
-
         if (enemyCount == 0)
         {
             if (waveNumber % 3 != 0)
